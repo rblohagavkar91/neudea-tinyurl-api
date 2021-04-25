@@ -34,7 +34,8 @@ Solution Provided as below :-
 ## How to Run the application ##
 
 ##Run application without docker
-Clone the project in Eclipse the do below steps -
+
+Clone the project in Eclipse and do the below steps -
 1. Right click on the project > Maven > Update Project
 2. Right click on the project > Run As > Maven Clean
 3. Right click on the project > Run As > Maven install
