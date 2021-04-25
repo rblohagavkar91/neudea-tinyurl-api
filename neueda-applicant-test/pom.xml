@@ -11,13 +11,13 @@
 	<groupId>com.neueda.urlprocess</groupId>
 	<artifactId>neueda-applicant-test</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>neueda-applicant-test</name>
 	<description>Spring Boot project for Neueda applicant Test - Tiny Url</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<start-class>com.package.name.CourseApiDataApplication</start-class>
+		<start-class>com.neueda.tinyurl.TinyUrlApiApplication</start-class>
 		<java.version>1.8</java.version>
 		<io.springfox.springfox.version>2.9.2</io.springfox.springfox.version>
 	</properties>

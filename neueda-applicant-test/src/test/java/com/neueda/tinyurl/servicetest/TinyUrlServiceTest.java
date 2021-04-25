@@ -1,6 +1,5 @@
 package com.neueda.tinyurl.servicetest;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -60,7 +59,8 @@ public class TinyUrlServiceTest {
         tinyUrl.setLongUrl(longUrl);
         tinyUrl.setCreatedTimestamp(new Timestamp(Calendar.getInstance().getTimeInMillis()));
         when(mockUrlRepository.findById((long) 7)).thenReturn(java.util.Optional.of(tinyUrl));
-        assertEquals(longUrl, mockUrlServiceTest.getOriginalUrl("h"));
+        TinyUrlResponse tinyUrlResponse = mockUrlServiceTest.getOriginalUrl("h");
+        assertNotNull(tinyUrlResponse);
     }
 	
 }

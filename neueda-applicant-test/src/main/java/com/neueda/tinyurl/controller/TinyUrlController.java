@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.neueda.tinyurl.model.TinyUrlRequest;
 import com.neueda.tinyurl.service.TinyUrlService;
 
 /**
@@ -33,21 +34,21 @@ public class TinyUrlController {
 	 * @return ResponseEntity
 	 */
 	@PostMapping("/longUrl")
-	public ResponseEntity<Object> createShortUrl(@RequestBody String longUrl) {
-		logger.info("Entering into createShortUrl method and input longURL is : "+longUrl);
-		return new ResponseEntity<>(tinyUrlService.createShortUrl(longUrl), HttpStatus.OK);
+	public ResponseEntity<Object> createShortUrl(@RequestBody TinyUrlRequest tinyUrlRequest) {
+		logger.info("Entering into createShortUrl method and input longURL is : "+tinyUrlRequest.getLongUrl());
+		return new ResponseEntity<>(tinyUrlService.createShortUrl(tinyUrlRequest.getLongUrl()), HttpStatus.OK);
 	}
 	
 	/**
 	 * This is API method for getting original Long url.
 	 * 
 	 * @param shortUrlId
-	 * @return longUrl
+	 * @return ResponseEntity
 	 */
 	@GetMapping("/shortUrl/{shortUrlId}")
-    public String getOriginalUrl(@PathVariable String shortUrlId) {
+    public ResponseEntity<Object> getOriginalUrl(@PathVariable String shortUrlId) {
 		logger.info("Entering into getOriginalUrl method and input shortUrlId is : "+shortUrlId);
-        return tinyUrlService.getOriginalUrl(shortUrlId);
+        return new ResponseEntity<>(tinyUrlService.getOriginalUrl(shortUrlId), HttpStatus.OK);
     }
     
 }

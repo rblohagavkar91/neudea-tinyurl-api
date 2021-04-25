@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.neueda.tinyurl.controller.TinyUrlController;
 import com.neueda.tinyurl.dao.TinyUrlRepository;
 import com.neueda.tinyurl.entity.TinyUrl;
+import com.neueda.tinyurl.model.TinyUrlRequest;
 import com.neueda.tinyurl.model.TinyUrlResponse;
 
 /**
@@ -35,7 +36,7 @@ public class TinyUrlService {
      *  This method contains business logic to create tiny url
      *
      */
-    public TinyUrlResponse createShortUrl(String longURL) {
+    public TinyUrlResponse createShortUrl(String longUrl) {
     	logger.info("Entering into createShortUrl of TinyUrlService class");
     	TinyUrlResponse tinyUrlResponse = new TinyUrlResponse();
     	TinyUrl tinyUrl = new TinyUrl();
@@ -44,11 +45,11 @@ public class TinyUrlService {
         cal.add(Calendar.DAY_OF_MONTH, 7);
         Timestamp expiryTimestamp = new Timestamp(cal.getTimeInMillis());
         
-        tinyUrl.setLongUrl(longURL);
+        tinyUrl.setLongUrl(longUrl);
         tinyUrl.setCreatedTimestamp(createdTimestamp);
         tinyUrl.setExpiryTimestamp(expiryTimestamp);
         TinyUrl entity = tinyUrlRepository.save(tinyUrl);
-        tinyUrlResponse.setTinyUrl(TINYURL+baseConversion.encode(entity.getUrlPrivacyid()));
+        tinyUrlResponse.setTinyUrlResponse(TINYURL+baseConversion.encode(entity.getUrlPrivacyid()));
         return tinyUrlResponse;
     }
 	
@@ -57,8 +58,9 @@ public class TinyUrlService {
      *  This method contains business logic to get original Url
      *
      */
-    public String getOriginalUrl(String shortUrl) {
+    public TinyUrlResponse getOriginalUrl(String shortUrl) {
     	logger.info("Entering into getOriginalUrl of TinyUrlService class");
+    	TinyUrlResponse tinyUrlResponse = new TinyUrlResponse();
         long id = baseConversion.decode(shortUrl);
         TinyUrl entity = tinyUrlRepository.findById(id).
        		orElseThrow(() -> new EntityNotFoundException("Entity Not found :" + shortUrl));
@@ -67,7 +69,7 @@ public class TinyUrlService {
        	tinyUrlRepository.delete(entity);
            throw new EntityNotFoundException("Oops, Link has been expired!");
        }
-
-       return entity.getLongUrl();
+       tinyUrlResponse.setTinyUrlResponse(entity.getLongUrl());
+       return tinyUrlResponse;
    }
 }

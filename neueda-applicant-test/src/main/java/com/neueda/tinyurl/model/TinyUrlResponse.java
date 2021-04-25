@@ -1,14 +1,14 @@
 package com.neueda.tinyurl.model;
 
 public class TinyUrlResponse {
-	String tinyUrl;
+	String tinyUrlResponse;
 
-	public String getTinyUrl() {
-		return tinyUrl;
+	public String getTinyUrlResponse() {
+		return tinyUrlResponse;
 	}
 
-	public void setTinyUrl(String tinyUrl) {
-		this.tinyUrl = tinyUrl;
+	public void setTinyUrlResponse(String tinyUrlResponse) {
+		this.tinyUrlResponse = tinyUrlResponse;
 	}
 
 }

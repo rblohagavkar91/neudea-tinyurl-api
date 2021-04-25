@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.neueda.tinyurl.controller.TinyUrlController;
+import com.neueda.tinyurl.model.TinyUrlRequest;
 import com.neueda.tinyurl.model.TinyUrlResponse;
 import com.neueda.tinyurl.service.TinyUrlService;
 
@@ -28,20 +29,24 @@ public class TinyUrlControllerTest {
 	@Test
 	public void urlConversionTest() {
 		TinyUrlResponse tinyUrlResponse = new TinyUrlResponse();
+		TinyUrlRequest tinyUrlRequest = new TinyUrlRequest();
 		String TINYURL = "http://bit.ly/";
 		String longUrl = "https://www.geeksforgeeks.org/create-immutable-class-java/";
-		tinyUrlResponse.setTinyUrl(TINYURL+"ax");
+		tinyUrlRequest.setLongUrl(longUrl);
+		tinyUrlResponse.setTinyUrlResponse(TINYURL+"ax");
 		when(mockUrlService.createShortUrl(longUrl)).thenReturn(tinyUrlResponse);
-		ResponseEntity<Object> response = urlController.createShortUrl(longUrl);
+		ResponseEntity<Object> response = urlController.createShortUrl(tinyUrlRequest);
 		assertEquals(200, response.getStatusCodeValue());
 	}
 
 	@Test
 	public void getAndRedirectTest() {
 		String shortUrl = "http://bit.ly/bg";
-		when(mockUrlService.getOriginalUrl("bg")).thenReturn(shortUrl);
-		
-		assertEquals(shortUrl,urlController.getOriginalUrl("bg"));
+		TinyUrlResponse tinyUrlResponse = new TinyUrlResponse();
+		tinyUrlResponse.setTinyUrlResponse(shortUrl);
+		when(mockUrlService.getOriginalUrl("bg")).thenReturn(tinyUrlResponse);
+		ResponseEntity<Object> response = urlController.getOriginalUrl("bg");
+		assertEquals(200, response.getStatusCodeValue());
 	}
 	
 }

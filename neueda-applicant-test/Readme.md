@@ -26,15 +26,36 @@ Solution Provided as below :-
 2. Spring Boot 2.4.3
 3. Junit	
 4. Swagger UI
-5. Mysql
+5. Mysql 8.0
+6. Docker 20.10.5
 
 ###Service Detail ###
 
 ## How to Run the application ##
+
+##Run application without docker
+Clone the project in Eclipse the do below steps -
 1. Right click on the project > Maven > Update Project
 2. Right click on the project > Run As > Maven Clean
 3. Right click on the project > Run As > Maven install
 4. Right click on PathProcessApiApplication.java(From the base package com.neueda.urlprocess) and Run As > Java Application
+
+##Run application without docker by two ways as given below.
+prerequisite : Docker already installed and running condition.
+
+#First Way : Application can be run through Docker commands by networking(As Spring boot connecting to mysql, there are two networks in comminication). Below steps need to be execute and application can be available to access. Below commands need to be executed in command prompt in the projects directory where Dockerfile.txt presents. 
+ 
+ 1. docker build -t neuedaapplicanttest .
+ 2. docker pull mysql:8.0
+ 3. docker run --name mysql-standalone -e MYSQL_ROOT_PASSWORD=admin -e  MYSQL_DATABASE=urlprocessschema -e MYSQL_USER=root -e 	MYSQL_PASSWORD=admin -d mysql:8.0
+ 4. docker container logs mysql-standalone
+ 5. docker run -d -p 8080:8080 --name neuedaapplicanttest --link mysql-standalone:mysql neuedaapplicanttest 
+
+#Second Way : Application can be executed by executing docker-compose.yml file added in project structure. That file contains all commands/steps require to run the application in docker. To execute docker-compose.yml file, below commands need to be executed in command prompt in the projects directory where docker-compose.yml file presents.
+
+1. docker build -t neuedaapplicanttest .
+2. docker-compose up
+
 
 #Application can be easily tested by below URL. It will provide Swagger UI to test the service.
 http://localhost:8080/swagger-ui.html
@@ -47,11 +68,13 @@ Input :
 
 If want to test through postman/Soap, URL :- http://localhost:8080/api/longUrl
 
-{"longURL": "https://www.toolsqa.com/postman/post-request-in-postman/"}
+{"longUrl": "https://www.toolsqa.com/postman/post-request-in-postman/"}
 
 output :
 
-http://bit.ly/p
+{
+  "tinyUrlResponse": "http://bit.ly/p"
+}
 
 ----------------------
 2. getOriginalUrl
@@ -62,9 +85,8 @@ URL :-
 http://localhost:8080/api/shortUrl/p
 
 Output :
-{"longUrl": "https://www.toolsqa.com/postman/post-request-in-postman/"}
+{"tinyUrlResponse": "https://www.toolsqa.com/postman/post-request-in-postman/"}
 
 --------------------- 
 ## What could I do more(Improvement points)
-1. Exception handling could be improved at granular level
-2. Response handling can be improved
+Exception handling could be improved at granular level
